@@ -1,2 +1,5 @@
-# react-native-starter
-react-native-app-starter
+## REACT NATIVE APP STARTER
+- React Native
+- TailwindCSS
+- Expo
+- Supbase
