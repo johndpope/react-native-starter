@@ -4,5 +4,7 @@
 - Expo
 - Supabase
 
-## CRUD TODO LIST
-- Bottom Tab (Profile & TodoList)
+## View
+- Auth
+- Profile
+- TodoList (CRUD)
