@@ -1,5 +1,5 @@
 ## REACT NATIVE APP STARTER
 - React Native
-- TailwindCSS
+- TailwindCSS - tailwind-rrc
 - Expo
-- Supbase
+- Supabase
