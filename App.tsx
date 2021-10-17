@@ -6,11 +6,9 @@ import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 
-import { StyleSheet, View, Platform } from "react-native";
-import { ThemeProvider, colors, Text } from "react-native-elements";
-import { Styles } from "./lib/constants";
+import { Platform } from "react-native";
+import { colors } from "react-native-elements";
 import { UserContextProvider, useUser } from "./components/UserContext";
-import List from "./components/TodoList";
 import Auth from "./components/Auth";
 
 const theme = {
@@ -24,45 +22,23 @@ const theme = {
 
 const Container = () => {
   const { user } = useUser();
-
-  return user ? <List /> : <Auth />;
+  const colorScheme = useColorScheme();
+  return user ? <Navigation colorScheme={colorScheme} /> : <Auth />;
 };
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
-  const colorScheme = useColorScheme();
 
   if (!isLoadingComplete) {
     return null;
   } else {
     return (
       <UserContextProvider>
-        <ThemeProvider theme={theme}>
-          <View style={styles.container}>
-            <View style={styles.verticallySpaced}>
-              <Text h1>Todo List</Text>
-            </View>
-            <Container />
-            <StatusBar style="auto" />
-          </View>
-        </ThemeProvider>
+        <SafeAreaProvider>
+          <Container />
+          <StatusBar style="auto" />
+        </SafeAreaProvider>
       </UserContextProvider>
-      // <SafeAreaProvider>
-      //   <Navigation colorScheme={colorScheme} />
-      //   <StatusBar />
-      // </SafeAreaProvider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 40,
-    padding: Styles.spacing,
-  },
-  verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
-    alignSelf: "stretch",
-  },
-});

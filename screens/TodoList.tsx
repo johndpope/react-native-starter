@@ -1,20 +1,19 @@
 import * as React from "react";
-import { Text, View } from "react-native";
+import { Text, View, SafeAreaView } from "react-native";
 import tailwind from "tailwind-rn";
 
-import Auth from "../components/Auth";
+import List from "../components/TodoList";
 import { RootTabScreenProps } from "../types";
 
 export default function TabOneScreen({
   navigation,
-}: RootTabScreenProps<"TabOne">) {
+}: RootTabScreenProps<"ToDo">) {
   return (
-    <View>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={tailwind("bg-blue-200 px-3 py-1 rounded-full")}>
         <Text style={tailwind("text-blue-800 font-semibold")}>Tab One</Text>
       </View>
-      <View />
-      <Auth />
-    </View>
+      <List />
+    </SafeAreaView>
   );
 }

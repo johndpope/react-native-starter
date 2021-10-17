@@ -1,19 +1,10 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  SafeAreaView,
-  FlatList,
-} from "react-native";
-import { Styles } from "../lib/constants";
+import { View, SafeAreaView, FlatList } from "react-native";
 import { Text } from "react-native-elements";
 import { supabase } from "../lib/initSupabase";
 import { useUser } from "../components/UserContext";
 
 import { Button, Input, ListItem, CheckBox } from "react-native-elements";
-
-/** URL polyfill. Required for Supabase queries to work in React Native. */
 import "react-native-url-polyfill/auto";
 
 type Todo = {
@@ -44,7 +35,6 @@ export default function TodoList() {
 
   const addTodo = async (taskText: string) => {
     const task = taskText.trim();
-    console.log("newtask:", task);
     if (task.length) {
       const { data: todo, error } = await supabase
         .from<Todo>("todos")
@@ -75,11 +65,11 @@ export default function TodoList() {
   };
 
   return (
-    <View>
-      <View style={[styles.verticallySpaced, { marginTop: 20 }]}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View>
         <Button title="Sign out" onPress={() => supabase.auth.signOut()} />
       </View>
-      <View style={[styles.verticallySpaced, { marginTop: 20 }]}>
+      <View>
         <Input
           label="New todo"
           leftIcon={{ type: "font-awesome", name: "tasks" }}
@@ -88,7 +78,7 @@ export default function TodoList() {
         />
         <Button title="Add" onPress={() => addTodo(newTaskText)} />
       </View>
-      <SafeAreaView style={styles.verticallySpaced}>
+      <SafeAreaView style={{ flex: 1 }}>
         <FlatList
           scrollEnabled={true}
           data={todos}
@@ -122,18 +112,6 @@ export default function TodoList() {
           )}
         />
       </SafeAreaView>
-    </View>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 40,
-    padding: Styles.spacing,
-  },
-  verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
-    alignSelf: "stretch",
-  },
-});

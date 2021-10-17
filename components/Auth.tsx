@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
-import { Styles } from "../lib/constants";
+import React, { useEffect, useState } from "react";
+import { Alert, View } from "react-native";
 import { supabase } from "../lib/initSupabase";
 
 import { Button, Input } from "react-native-elements";
 
 export default function Auth() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState("");
+  const [email, setEmail] = useState<string>("yukiohori@gmail.com");
+  const [password, setPassword] = useState<string>("yuki8963");
+  const [loading, setLoading] = useState<string>("");
 
   const handleLogin = async (type: string, email: string, password: string) => {
     setLoading(type);
@@ -18,12 +17,19 @@ export default function Auth() {
         : await supabase.auth.signUp({ email, password });
     if (!error && !user) Alert.alert("Check your email for the login link!");
     if (error) Alert.alert(error.message);
-    setLoading("");
   };
+
+  useEffect(() => {
+    return () => {
+      setEmail("");
+      setPassword("");
+      setLoading("");
+    };
+  }, []);
 
   return (
     <View>
-      <View style={[styles.verticallySpaced, { marginTop: 20 }]}>
+      <View>
         <Input
           label="Email"
           leftIcon={{ type: "font-awesome", name: "envelope" }}
@@ -33,7 +39,7 @@ export default function Auth() {
           autoCapitalize={"none"}
         />
       </View>
-      <View style={styles.verticallySpaced}>
+      <View>
         <Input
           label="Password"
           leftIcon={{ type: "font-awesome", name: "lock" }}
@@ -44,7 +50,7 @@ export default function Auth() {
           autoCapitalize={"none"}
         />
       </View>
-      <View style={[styles.verticallySpaced, { marginTop: 20 }]}>
+      <View>
         <Button
           title="Sign in"
           disabled={!!loading.length}
@@ -52,7 +58,7 @@ export default function Auth() {
           onPress={() => handleLogin("LOGIN", email, password)}
         />
       </View>
-      <View style={styles.verticallySpaced}>
+      <View>
         <Button
           title="Sign up"
           disabled={!!loading.length}
@@ -63,15 +69,3 @@ export default function Auth() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 40,
-    padding: Styles.spacing,
-  },
-  verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
-    alignSelf: "stretch",
-  },
-});
