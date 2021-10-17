@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Alert, View } from "react-native";
+import { Alert, View, SafeAreaView } from "react-native";
 import { supabase } from "../lib/initSupabase";
+import tailwind from "tailwind-rn";
 
 import { Button, Input } from "react-native-elements";
 
@@ -28,8 +29,8 @@ export default function Auth() {
   }, []);
 
   return (
-    <View>
-      <View>
+    <SafeAreaView style={tailwind("p-4 h-full justify-center")}>
+      <View style={tailwind("p-4 border rounded")}>
         <Input
           label="Email"
           leftIcon={{ type: "font-awesome", name: "envelope" }}
@@ -38,8 +39,6 @@ export default function Auth() {
           placeholder="email@address.com"
           autoCapitalize={"none"}
         />
-      </View>
-      <View>
         <Input
           label="Password"
           leftIcon={{ type: "font-awesome", name: "lock" }}
@@ -49,16 +48,13 @@ export default function Auth() {
           placeholder="Password"
           autoCapitalize={"none"}
         />
-      </View>
-      <View>
         <Button
           title="Sign in"
           disabled={!!loading.length}
           loading={loading === "LOGIN"}
           onPress={() => handleLogin("LOGIN", email, password)}
+          style={tailwind("my-4 w-full")}
         />
-      </View>
-      <View>
         <Button
           title="Sign up"
           disabled={!!loading.length}
@@ -66,6 +62,6 @@ export default function Auth() {
           onPress={() => handleLogin("SIGNUP", email, password)}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

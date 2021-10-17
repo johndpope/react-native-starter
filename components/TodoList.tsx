@@ -6,6 +6,7 @@ import { useUser } from "../components/UserContext";
 
 import { Button, Input, ListItem, CheckBox } from "react-native-elements";
 import "react-native-url-polyfill/auto";
+import tailwind from "tailwind-rn";
 
 type Todo = {
   id: number;
@@ -65,11 +66,8 @@ export default function TodoList() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View>
-        <Button title="Sign out" onPress={() => supabase.auth.signOut()} />
-      </View>
-      <View>
+    <SafeAreaView style={tailwind("flex-1 p-4")}>
+      <View style={tailwind("mb-4")}>
         <Input
           label="New todo"
           leftIcon={{ type: "font-awesome", name: "tasks" }}
@@ -78,7 +76,7 @@ export default function TodoList() {
         />
         <Button title="Add" onPress={() => addTodo(newTaskText)} />
       </View>
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={tailwind("flex-1")}>
         <FlatList
           scrollEnabled={true}
           data={todos}
@@ -87,21 +85,15 @@ export default function TodoList() {
             <ListItem bottomDivider>
               <ListItem.Content>
                 <View
-                  style={[
-                    {
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                    },
-                  ]}
+                  style={tailwind(
+                    "w-full flex-1 flex flex-row items-center justify-between"
+                  )}
                 >
                   <CheckBox
                     checked={todo.is_complete}
                     onPress={() => toggleCompleted(todo.id, todo.is_complete)}
                   />
-                  <Text h3 style={{ margin: "auto" }}>
-                    {todo.task}
-                  </Text>
+                  <Text style={tailwind("w-full")}>{todo.task}</Text>
                   <Button
                     title="Delete"
                     onPress={() => deleteTodo(todo.id)}

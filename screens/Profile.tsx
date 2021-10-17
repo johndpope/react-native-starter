@@ -1,14 +1,13 @@
 import * as React from "react";
-import { Text, View } from "react-native";
+import { SafeAreaView } from "react-native";
 import tailwind from "tailwind-rn";
+
+import Profile from "../components/Profile";
 
 export default function TabTwoScreen() {
   return (
-    <View>
-      <View style={tailwind("bg-blue-200 px-3 py-1 rounded-full")}>
-        <Text style={tailwind("text-blue-800 font-semibold")}>Tab Two</Text>
-      </View>
-      <View />
-    </View>
+    <SafeAreaView style={tailwind("flex-1")}>
+      <Profile />
+    </SafeAreaView>
   );
 }
