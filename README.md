@@ -3,3 +3,6 @@
 - TailwindCSS - tailwind-rrc
 - Expo
 - Supabase
+
+## CRUD TODO LIST
+- Bottom Tab (Profile & TodoList)
