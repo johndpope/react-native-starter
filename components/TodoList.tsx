@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { View, SafeAreaView, FlatList } from "react-native";
-import { Text } from "react-native-elements";
+import { View, SafeAreaView, FlatList, ImageBackground } from "react-native";
 import { supabase } from "../lib/initSupabase";
 import { useUser } from "../components/UserContext";
 
-import { Button, Input, ListItem, CheckBox, Icon } from "react-native-elements";
+import {
+  Text,
+  Button,
+  Input,
+  ListItem,
+  CheckBox,
+  Icon,
+} from "react-native-elements";
 import "react-native-url-polyfill/auto";
 import tailwind from "tailwind-rn";
 
@@ -14,6 +20,10 @@ type Todo = {
   task: string;
   is_complete: boolean;
   inserted_at: Date;
+};
+
+const image = {
+  uri: "https://images.pexels.com/photos/246121/pexels-photo-246121.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
 };
 
 export default function TodoList() {
@@ -66,52 +76,50 @@ export default function TodoList() {
   };
 
   return (
-    <SafeAreaView style={tailwind("flex-1 p-4")}>
-      <View style={tailwind("mb-4")}>
-        <Input
-          label="New todo"
-          leftIcon={{ type: "font-awesome", name: "tasks" }}
-          onChangeText={(text) => setNewTaskText(text)}
-          value={newTaskText}
-        />
+    <SafeAreaView style={tailwind("flex-1 ")}>
+      <ImageBackground source={image} style={tailwind("flex-1 p-4")}>
+        <View style={tailwind("bg-white rounded-t")}>
+          <Input
+            label="New todo"
+            leftIcon={{ type: "font-awesome", name: "tasks" }}
+            onChangeText={(text) => setNewTaskText(text)}
+            value={newTaskText}
+          />
+        </View>
         <Button title="Add" onPress={() => addTodo(newTaskText)} />
-      </View>
-      <SafeAreaView style={tailwind("flex-1")}>
-        <FlatList
-          scrollEnabled={true}
-          data={todos}
-          keyExtractor={(item) => `${item.id}`}
-          renderItem={({ item: todo }) => (
-            <ListItem bottomDivider>
-              <ListItem.Content>
-                <View
-                  style={tailwind(
-                    "w-full flex-1 flex flex-row items-center justify-between"
-                  )}
-                >
-                  <CheckBox
-                    checked={todo.is_complete}
-                    onPress={() => toggleCompleted(todo.id, todo.is_complete)}
-                  />
-                  <Text style={tailwind("w-full")}>{todo.task}</Text>
-                  <Icon
-                    raised
-                    name="trash"
-                    type="font-awesome"
-                    color="#f50"
-                    onPress={() => deleteTodo(todo.id)}
-                    tvParallaxProperties={undefined}
-                  />
-                  {/* <Button
-                    title="Delete"
-                    onPress={() => deleteTodo(todo.id)}
-                  ></Button> */}
-                </View>
-              </ListItem.Content>
-            </ListItem>
-          )}
-        />
-      </SafeAreaView>
+        <SafeAreaView style={tailwind("mt-4 flex-1")}>
+          <FlatList
+            scrollEnabled={true}
+            data={todos}
+            keyExtractor={(item) => `${item.id}`}
+            renderItem={({ item: todo }) => (
+              <ListItem bottomDivider>
+                <ListItem.Content>
+                  <View
+                    style={tailwind(
+                      "w-full flex-1 flex flex-row items-center justify-between"
+                    )}
+                  >
+                    <CheckBox
+                      checked={todo.is_complete}
+                      onPress={() => toggleCompleted(todo.id, todo.is_complete)}
+                    />
+                    <Text style={tailwind("w-full")}>{todo.task}</Text>
+                    <Icon
+                      raised
+                      name="trash"
+                      type="font-awesome"
+                      color="#f50"
+                      onPress={() => deleteTodo(todo.id)}
+                      tvParallaxProperties={{}}
+                    />
+                  </View>
+                </ListItem.Content>
+              </ListItem>
+            )}
+          />
+        </SafeAreaView>
+      </ImageBackground>
     </SafeAreaView>
   );
 }

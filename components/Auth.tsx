@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Alert, View, SafeAreaView } from "react-native";
+import { Alert, View, ImageBackground } from "react-native";
 import { supabase } from "../lib/initSupabase";
 import tailwind from "tailwind-rn";
 
 import { Button, Input } from "react-native-elements";
+
+const image = {
+  uri: "https://images.pexels.com/photos/246121/pexels-photo-246121.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+};
 
 export default function Auth() {
   const [email, setEmail] = useState<string>("");
@@ -29,8 +33,11 @@ export default function Auth() {
   }, []);
 
   return (
-    <SafeAreaView style={tailwind("p-4 h-full justify-center")}>
-      <View style={tailwind("p-4 border rounded")}>
+    <ImageBackground
+      source={image}
+      style={tailwind("p-4 h-full justify-center")}
+    >
+      <View style={tailwind("p-4 border rounded bg-white")}>
         <Input
           label="Email"
           leftIcon={{ type: "font-awesome", name: "envelope" }}
@@ -62,6 +69,6 @@ export default function Auth() {
           onPress={() => handleLogin("SIGNUP", email, password)}
         />
       </View>
-    </SafeAreaView>
+    </ImageBackground>
   );
 }
