@@ -4,7 +4,7 @@ import { Text } from "react-native-elements";
 import { supabase } from "../lib/initSupabase";
 import { useUser } from "../components/UserContext";
 
-import { Button, Input, ListItem, CheckBox } from "react-native-elements";
+import { Button, Input, ListItem, CheckBox, Icon } from "react-native-elements";
 import "react-native-url-polyfill/auto";
 import tailwind from "tailwind-rn";
 
@@ -94,10 +94,18 @@ export default function TodoList() {
                     onPress={() => toggleCompleted(todo.id, todo.is_complete)}
                   />
                   <Text style={tailwind("w-full")}>{todo.task}</Text>
-                  <Button
+                  <Icon
+                    raised
+                    name="trash"
+                    type="font-awesome"
+                    color="#f50"
+                    onPress={() => deleteTodo(todo.id)}
+                    tvParallaxProperties={undefined}
+                  />
+                  {/* <Button
                     title="Delete"
                     onPress={() => deleteTodo(todo.id)}
-                  ></Button>
+                  ></Button> */}
                 </View>
               </ListItem.Content>
             </ListItem>
